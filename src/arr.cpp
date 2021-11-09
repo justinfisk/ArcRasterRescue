@@ -724,8 +724,8 @@ RasterBase::RasterBase(std::string filename) : BaseTable(filename) {
 
   //TODO: This is not guaranteed to be correct
   const double pw = (emaxx-eminx)/static_cast<double>(band_width-1);
-  const double ph = (emaxx-eminx)/static_cast<double>(band_width-1);
-  geotransform[0] = eminx+(pw*0.5);
+  const double ph = (emaxy-eminy)/static_cast<double>(band_height-1);
+  geotransform[0] = eminx-(pw*0.5);
   geotransform[1] = pw;
   geotransform[2] = 0;
   geotransform[3] = emaxy+(ph*0.5);
@@ -1137,8 +1137,8 @@ RasterData<T>::RasterData(std::string filename, const RasterBase &rb) : BaseTabl
         //Save data to the numpy array
         for(int y=0;y<rb.block_height;y++)
         for(int x=0;x<rb.block_width;x++){
-          int px = col_nbr*(rb.block_width )+x+xoffset;
-          int py = row_nbr*(rb.block_height)+y+yoffset;
+          int px = col_nbr*(rb.block_width )+x; //+xoffset;
+          int py = row_nbr*(rb.block_height)+y; //+yoffset;
           if(in_raster(px,py)){
             operator()(px, py) = unpacked[y*(rb.block_width)+x];
           } else {
