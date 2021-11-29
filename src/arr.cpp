@@ -1176,8 +1176,8 @@ RasterData<T>::RasterData(std::string filename, const RasterBase &rb) : BaseTabl
   for(uint64_t i=0;i<geodata.size();i++)
     if(geodata[i]==*translated_arc_no_data)
       geodata[i] = no_data;
-    //else if(geodata[i]==0) //TODO: Surely this is not always NoData?
-    //  geodata[i] = no_data;
+    else if(geodata[i]==-2147483647) //TODO: Surely this is not always NoData?
+      geodata[i] = no_data;
 }
 
 
