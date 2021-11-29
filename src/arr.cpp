@@ -1168,7 +1168,7 @@ RasterData<T>::RasterData(std::string filename, const RasterBase &rb) : BaseTabl
   //was looking at. I don't know if this is consistent across different
   //architectures or not. The following worked on my machine, but may not work
   //on yours. Some careful thinking is needed to improve this section.
-  const uint32_t arc_no_data      = -0xff7fffff;
+  const int32_t arc_no_data       = -0xff7fffff;
   const T *translated_arc_no_data = reinterpret_cast<const T*>(&arc_no_data);
 
   no_data = -9999; //TODO: This cannot always be NoData.
@@ -1176,8 +1176,8 @@ RasterData<T>::RasterData(std::string filename, const RasterBase &rb) : BaseTabl
   for(uint64_t i=0;i<geodata.size();i++)
     if(geodata[i]==*translated_arc_no_data)
       geodata[i] = no_data;
-    else if(geodata[i]==0) //TODO: Surely this is not always NoData?
-      geodata[i] = no_data;
+    //else if(geodata[i]==0) //TODO: Surely this is not always NoData?
+    //  geodata[i] = no_data;
 }
 
 
